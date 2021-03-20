@@ -66,8 +66,8 @@ void StripDisplay::setFgColor(CRGB fg) {
 void StripDisplay::newTextBitmap() {
 	if (bmp != NULL)
 		BMP_Free(bmp);
-	int textWidth = text.length() * fontP->getWidth();
-	int textHeight = fontP->getHeight();
+	int textWidth = getTextWidth();
+	int textHeight = getTextHeight();
 	bmp = BMP_Create(max(w, textWidth), max(h, textHeight), 24);
 	if (bmp == NULL)
 		Serial.println("Bitmap allocation failed");
@@ -133,8 +133,8 @@ void StripDisplay::renderText(unsigned int x0, unsigned int y0, CRGB crgb) {
 
 void StripDisplay::displayText(int offset) {
 	int i0 = 0;
-	int textWidth = text.length() * fontP->getWidth();
-	int textHeight = fontP->getHeight();
+	int textWidth = getTextWidth();
+	int textHeight = getTextHeight();
 	int width = min(w, textWidth);
 	int height = min(h, textHeight);
 	if (align == ALIGN_CENTER)
@@ -148,5 +148,15 @@ void StripDisplay::displayText(int offset) {
 	blitBitmap(0, 0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp));
 	renderText(0, 0, fg);
 	blitBitmap(i0, offset, 0, width, height);
+}
+
+
+
+int StripDisplay::getTextWidth() {
+	return text.length() * fontP->getWidth();
+}
+
+int StripDisplay::getTextHeight() {
+	return fontP->getHeight();
 }
 

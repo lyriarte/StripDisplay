@@ -46,6 +46,9 @@ class StripDisplay {
 	void renderText(unsigned int x0, unsigned int y0, CRGB crgb);
 	void displayText(int offset=0);
 
+	int getTextWidth();
+	int getTextHeight();
+
 	private:
 
 	int gpio;

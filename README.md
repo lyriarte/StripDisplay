@@ -49,7 +49,7 @@ void loop() {
 	strip.setFgColor(CRGB(4,2,0));
 	strip.setBgColor(CRGB(0,0,1));
 	strip.setText("Hello, world!");
-	for (int i=0; i<50; i++) {
+	for (int i=0; i<strip.getTextWidth(); i++) {
 		strip.displayText(i);
 		FastLED.delay(100);
 	}
