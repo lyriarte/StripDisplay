@@ -94,11 +94,6 @@ BMP*      BMP_Create          ( UINT width, UINT height, USHORT depth );
 void      BMP_Free          ( BMP* bmp );
 
 
-/* I/O */
-BMP*      BMP_ReadFile        ( const char* filename );
-void      BMP_WriteFile       ( BMP* bmp, const char* filename );
-
-
 /* Meta info */
 UINT      BMP_GetWidth        ( BMP* bmp );
 UINT      BMP_GetHeight       ( BMP* bmp );
