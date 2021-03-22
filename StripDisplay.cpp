@@ -16,6 +16,7 @@ StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, CRGB *leds) {
 void StripDisplay::setup(XBMFont* fontP) {
 	setFont(fontP);
 	pinMode(gpio, OUTPUT);
+	newTextBitmap();
 }
 
 int StripDisplay::getGpio() {
@@ -117,6 +118,21 @@ void StripDisplay::blitBitmap(int i0, int ox, int oy, int dx, int dy) {
 		}
 	}
 }
+
+CRGB StripDisplay::getPixel(unsigned int x, unsigned int y) {
+	CRGB crgb;
+	BMP_GetPixelRGB(bmp, x, y, &crgb.r, &crgb.g, &crgb.b);
+	return crgb;
+}
+
+void StripDisplay::setPixel(unsigned int x, unsigned int y, CRGB crgb) {
+	BMP_SetPixelRGB(bmp, x, y, crgb.r, crgb.g, crgb.b);
+}
+
+void StripDisplay::displayBitmap(int i0) {
+	blitBitmap(i0, 0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp));
+}
+
 
 void StripDisplay::renderText(unsigned int x0, unsigned int y0, CRGB crgb) {
 	unsigned int x = x0;

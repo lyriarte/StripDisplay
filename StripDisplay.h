@@ -49,6 +49,10 @@ class StripDisplay {
 	int getTextWidth();
 	int getTextHeight();
 
+	CRGB getPixel(unsigned int x, unsigned int y);
+	void setPixel(unsigned int x, unsigned int y, CRGB crgb);
+	void displayBitmap(int i0=0);
+
 	private:
 
 	int gpio;
