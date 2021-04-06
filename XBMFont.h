@@ -38,5 +38,23 @@ XBMFont fixedMedium_5x6(5,6,font_FixedMedium_5x6);
 XBMFont fixedMedium_5x7(5,7,font_FixedMedium_5x7);
 #endif
 
+#ifdef FONT_5x8_FIXED_MEDIUM
+#undef FONT_5x8_FIXED_MEDIUM
+#include "5x8-ISO8859-1.xbm"
+XBMFont fixedMedium_5x8(5,8,font_FixedMedium_5x8);
+#endif
+
+#ifdef FONT_6x8_FIXED_MEDIUM
+#undef FONT_6x8_FIXED_MEDIUM
+#include "6x8-ISO8859-1.xbm"
+XBMFont fixedMedium_6x8(6,8,font_FixedMedium_6x8);
+#endif
+
+#ifdef FONT_6x9_FIXED_MEDIUM
+#undef FONT_6x9_FIXED_MEDIUM
+#include "6x9-ISO8859-1.xbm"
+XBMFont fixedMedium_6x9(6,9,font_FixedMedium_6x9);
+#endif
+
 
 #endif
