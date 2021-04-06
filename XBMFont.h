@@ -20,6 +20,12 @@ class XBMFont {
 };
 
 
+#ifdef FONT_4x6_FIXED_MEDIUM
+#undef FONT_4x6_FIXED_MEDIUM
+#include "4x6-ISO8859-1.xbm"
+XBMFont fixedMedium_4x6(4,6,font_FixedMedium_4x6);
+#endif
+
 #ifdef FONT_5x6_FIXED_MEDIUM
 #undef FONT_5x6_FIXED_MEDIUM
 #include "5x6-ISO8859-1.xbm"
