@@ -13,21 +13,20 @@ The fonts used are the ISO8859 FixedMedium from the /usr/share/fonts/X11/misc/ f
 ### Code sample
 
 ```
+#define FONT_5x8_FIXED_MEDIUM
 #include <StripDisplay.h>
 
 
 #define STRIPLED_GPIO 5
-#define STRIPLED_W    32
+#define STRIPLED_W    64
 #define STRIPLED_H    8
-
-extern XBMFont fixedMedium_5x7;
 
 CRGB leds[STRIPLED_W*STRIPLED_H];
 StripDisplay strip(STRIPLED_GPIO, STRIPLED_W, STRIPLED_H, WRAP_COLUMNS, leds);
 
 void setup() {
 	FastLED.addLeds<NEOPIXEL,STRIPLED_GPIO>(leds, STRIPLED_W*STRIPLED_H);
-	strip.setup(&fixedMedium_5x7);
+	strip.setup(&fixedMedium_5x8);
 	Serial.begin(9600);
 	Serial.println(String(STRIPLED_W*STRIPLED_H) + String(" leds on gpio ") + String(strip.getGpio()));
 }
