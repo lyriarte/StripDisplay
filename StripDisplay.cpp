@@ -1,11 +1,12 @@
 #include "StripDisplay.h"
 
-StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, CRGB *leds) {
+StripDisplay::StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels) {
 	this->gpio = gpio;
 	this->w = w;
 	this->h = h; 
-	this->wrap = wrap;
 	this->leds = leds;
+	this->panels = panels;
+	this->nPanels = nPanels;
 	bmp = NULL;
 	fontP = NULL;
 	align = ALIGN_LEFT;
@@ -31,12 +32,20 @@ int StripDisplay::getHeight() {
 	return h;
 }
 
-int StripDisplay::getWrap() {
-	return wrap;
-}
-
 CRGB * StripDisplay::getLeds() {
 	return leds;
+}
+
+StripLEDPanel * StripDisplay::getPanels() {
+	return panels;
+}
+
+int StripDisplay::getNPanels() {
+	return nPanels;
+}
+
+BMP * StripDisplay::getBitmap() {
+	return bmp;
 }
 
 
@@ -80,38 +89,38 @@ void StripDisplay::fillBitmap(unsigned int x0, unsigned int y0, unsigned int dx,
 			BMP_SetPixelRGB(bmp, x, y, crgb.r, crgb.g, crgb.b);
 }
 
-void StripDisplay::blitBitmap(int i0, int ox, int oy, int dx, int dy) {
+void StripDisplay::blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap) {
 	int i=i0, ix, iy;
 	int width = min((int)BMP_GetWidth(bmp),ox+dx);
 	int height = min((int)BMP_GetHeight(bmp),oy+dy);
 	byte r,g,b;
 	if (wrap == WRAP_LINES) {
-		for (int y=0; y<h; y++) {
+		for (int y=0; y<dy; y++) {
 			iy = y+oy;
-			for (int x=0; x<w;x++) {
+			for (int x=0; x<dx;x++) {
 				ix = x+ox;
 				if (ix>=0 && iy>=0 && ix<width && iy<height) {
 					BMP_GetPixelRGB(bmp,ix,iy,&r,&g,&b);
 					if (y%2 == 0) 
 						leds[i] = CRGB(r, g, b);		   
 					else 
-						leds[w*(int)(i/w) + w - ((i%w) + 1)] = CRGB(r, g, b);		   
+						leds[dx*(int)(i/dx) + dx - ((i%dx) + 1)] = CRGB(r, g, b);		   
 				}
 				++i;
 			}
 		}
 	}
 	else {
-		for (int x=0; x<w;x++) {
+		for (int x=0; x<dx;x++) {
 			ix = x+ox;
-			for (int y=0; y<h; y++) {
+			for (int y=0; y<dy; y++) {
 				iy = y+oy;
 				if (ix>=0 && iy>=0 && ix<width && iy<height) {
 					BMP_GetPixelRGB(bmp,ix,iy,&r,&g,&b);
 					if (x%2 == 0) 
 						leds[i] = CRGB(r, g, b);		   
 					else 
-						leds[h*(int)(i/h) + h - ((i%h) + 1)] = CRGB(r, g, b);		   
+						leds[dy*(int)(i/dy) + dy - ((i%dy) + 1)] = CRGB(r, g, b);		   
 				}
 				++i;
 			}
@@ -129,8 +138,9 @@ void StripDisplay::setPixel(unsigned int x, unsigned int y, CRGB crgb) {
 	BMP_SetPixelRGB(bmp, x, y, crgb.r, crgb.g, crgb.b);
 }
 
-void StripDisplay::displayBitmap(int i0) {
-	blitBitmap(i0, 0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp));
+void StripDisplay::displayBitmap() {
+	for (int i=0; i<nPanels; i++)
+		blitBitmap(panels[i].ledIndex, panels[i].bmpX, panels[i].bmpY, panels[i].w, panels[i].h, panels[i].wrap);
 }
 
 
@@ -163,9 +173,9 @@ void StripDisplay::displayText(int offset) {
 			x0 = (w-width);
 	}
 	fillBitmap(0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp), bg);
-	blitBitmap(0, 0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp));
-	renderText(x0, 0, fg);
-	blitBitmap(0, offset, 0, x0+width, height);
+	displayBitmap();
+	renderText(x0 - offset, 0, fg);
+	displayBitmap();
 }
 
 
