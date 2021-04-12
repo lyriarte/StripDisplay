@@ -151,22 +151,21 @@ void StripDisplay::renderText(unsigned int x0, unsigned int y0, CRGB crgb) {
 }
 
 void StripDisplay::displayText(int offset) {
-	int i0 = 0;
+	int x0 = 0;
 	int textWidth = getTextWidth();
 	int textHeight = getTextHeight();
 	int width = min(w, textWidth);
 	int height = min(h, textHeight);
-	if (align == ALIGN_CENTER)
-		i0 = (w-width)/2;
-	else if (align == ALIGN_RIGHT)
-		i0 = (w-width);
-	// shift alignment on even columns
-	if (align != ALIGN_LEFT && wrap == WRAP_COLUMNS)
-		i0 = 2 * (int)(i0/2) * h;
+	if (textWidth <= w) {
+		if (align == ALIGN_CENTER)
+			x0 = (w-width)/2;
+		else if (align == ALIGN_RIGHT)
+			x0 = (w-width);
+	}
 	fillBitmap(0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp), bg);
 	blitBitmap(0, 0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp));
-	renderText(0, 0, fg);
-	blitBitmap(i0, offset, 0, width, height);
+	renderText(x0, 0, fg);
+	blitBitmap(0, offset, 0, x0+width, height);
 }
 
 
