@@ -13,13 +13,13 @@ The fonts used are the ISO8859 FixedMedium from the /usr/share/fonts/X11/misc/ f
 ### Code sample
 
 ```
-#define FONT_5x8_FIXED_MEDIUM
+#define FONT_6x9_FIXED_MEDIUM
 #include <StripDisplay.h>
-XBMFont * fontP = &fixedMedium_5x8;
+XBMFont * fontP = &fixedMedium_6x9;
 
 #define STRIPLED_GPIO 5
-#define BITMAP_W	64
-#define BITMAP_H	8
+#define BITMAP_W	32
+#define BITMAP_H	16
 #define STRIPLED_W	32
 #define STRIPLED_H	8
 
@@ -35,8 +35,8 @@ StripLEDPanel panels[] = {
 },
 {
 	STRIPLED_W*STRIPLED_H,
-	STRIPLED_W,
 	0,
+	STRIPLED_H,
 	STRIPLED_W,
 	STRIPLED_H,
 	WRAP_COLUMNS
@@ -48,10 +48,10 @@ StripLEDPanel panels[] = {
 StripDisplay strip(STRIPLED_GPIO, BITMAP_W, BITMAP_H, leds, panels, N_PANELS);
 
 void setup() {
-	FastLED.addLeds<NEOPIXEL,STRIPLED_GPIO>(leds, STRIPLED_W*STRIPLED_H*2);
+	FastLED.addLeds<NEOPIXEL,STRIPLED_GPIO>(leds, STRIPLED_W*STRIPLED_H*N_PANELS);
 	strip.setup(fontP);
 	Serial.begin(9600);
-	Serial.println(String(STRIPLED_W*STRIPLED_H) + String(" leds on gpio ") + String(strip.getGpio()));
+	Serial.println(String(STRIPLED_W*STRIPLED_H*N_PANELS) + String(" leds on gpio ") + String(strip.getGpio()));
 }
 
 void loop() {
@@ -63,7 +63,7 @@ void loop() {
 	strip.setPixel(BITMAP_W-1,0,CRGB(0,16,0));
 	strip.setPixel(0,BITMAP_H-1,CRGB(0,0,16));
 	strip.setPixel(BITMAP_W-1,BITMAP_H-1,CRGB(8,0,8));
-	strip.renderText(2, 1, CRGB(4,2,0));
+	strip.renderText(fontP->getWidth(), (BITMAP_H-fontP->getHeight())/2, CRGB(4,2,0));
 	strip.displayBitmap();
 	FastLED.delay(2000);
 	strip.setFgColor(CRGB(1,1,1));
