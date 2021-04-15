@@ -151,6 +151,8 @@ void StripDisplay::renderText(unsigned int x0, unsigned int y0, CRGB crgb) {
 		// UTF-8 - ISO8859-1 mapping
 		if (c == 195 && i+1<text.length() && text.charAt(i+1) > 95 && text.charAt(i+1) < 192)
 			c = text.charAt(++i) + 64;
+		else if (c == 194 && i+1<text.length() && text.charAt(i+1) > 160)
+			c = text.charAt(++i);
 		for (int j=0; j<fontP->getWidth(); j++) { 
 			for (int k=0; k<fontP->getHeight(); k++)
 				if (fontP->getPixel(c,k,j))
