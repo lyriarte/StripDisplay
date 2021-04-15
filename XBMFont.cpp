@@ -23,18 +23,11 @@ unsigned char * XBMFont::charAt(int index) {
 
 unsigned char * XBMFont::getBitmap(char c) {
 	unsigned int i = (unsigned int) c;
-	if (i >= 32 && i <= 127)
-		return this->charAt(i - 32); // [0..95]
-	if (i >= 224 && i <= 255)
-		return this->charAt(i - 128); // [96..127]
-	// Ad-hoc mappings for charcodes > 127
-	if (i >= 192 && i <= 198) return this->charAt(33); // 'A' - 32
-	if (i >= 200 && i <= 203) return this->charAt(37); // 'E' - 32
-	if (i >= 204 && i <= 207) return this->charAt(41); // 'I' - 32
-	if (i >= 210 && i <= 214) return this->charAt(47); // 'O' - 32
-	if (i >= 217 && i <= 222) return this->charAt(53); // 'U' - 32
-	if (i == 171 || i == 187) return this->charAt(02); // '"' - 32
-	return this->charAt(95); // 127-32
+	if (i < 128)
+		return this->charAt(i);
+	if (i > 127 && i < 160)
+		return this->charAt(127); // non printable
+	return this->charAt(i-32);
 }
 
 
