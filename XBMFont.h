@@ -56,5 +56,41 @@ XBMFont fixedMedium_6x8(6,8,font_FixedMedium_6x8);
 XBMFont fixedMedium_6x9(6,9,font_FixedMedium_6x9);
 #endif
 
+#ifdef FONT_6x10_FIXED_MEDIUM
+#undef FONT_6x10_FIXED_MEDIUM
+#include "6x10-ISO8859-1.xbm"
+XBMFont fixedMedium_6x10(6,10,font_FixedMedium_6x10);
+#endif
+
+#ifdef FONT_6x12_FIXED_MEDIUM
+#undef FONT_6x12_FIXED_MEDIUM
+#include "6x12-ISO8859-1.xbm"
+XBMFont fixedMedium_6x12(6,12,font_FixedMedium_6x12);
+#endif
+
+#ifdef FONT_6x13_FIXED_MEDIUM
+#undef FONT_6x13_FIXED_MEDIUM
+#include "6x13-ISO8859-1.xbm"
+XBMFont fixedMedium_6x13(6,13,font_FixedMedium_6x13);
+#endif
+
+#ifdef FONT_7x13_FIXED_BOLD
+#undef FONT_7x13_FIXED_BOLD
+#include "7x13B-ISO8859-1.xbm"
+XBMFont fixedBold_7x13(7,13,font_FixedBold_7x13);
+#endif
+
+#ifdef FONT_8x13_FIXED_MEDIUM
+#undef FONT_8x13_FIXED_MEDIUM
+#include "8x13-ISO8859-1.xbm"
+XBMFont fixedMedium_8x13(8,13,font_FixedMedium_8x13);
+#endif
+
+#ifdef FONT_8x13_FIXED_BOLD
+#undef FONT_8x13_FIXED_BOLD
+#include "8x13B-ISO8859-1.xbm"
+XBMFont fixedBold_8x13(8,13,font_FixedBold_8x13);
+#endif
+
 
 #endif
