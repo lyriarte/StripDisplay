@@ -1,6 +1,21 @@
 #include "StripDisplay.h"
 
+StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, CRGB *leds) {
+	StripLEDPanel *panelP = (StripLEDPanel *) malloc(sizeof(StripLEDPanel));
+	panelP->ledIndex = 0;
+	panelP->bmpX = 0;
+	panelP->bmpY = 0;
+	panelP->w = w;
+	panelP->h = h;
+	panelP->wrap = wrap;
+	this->init(gpio, w, h, leds, panelP, 1);
+}
+
 StripDisplay::StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels) {
+	this->init(gpio, w, h, leds, panels, nPanels);
+}
+
+void StripDisplay::init(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels) {
 	this->gpio = gpio;
 	this->w = w;
 	this->h = h; 

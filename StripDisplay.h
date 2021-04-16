@@ -33,6 +33,7 @@ class StripDisplay {
 
 	public:
 
+	StripDisplay(int gpio, int w, int h, int wrap, CRGB *leds);
 	StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels);
 
 	void setup(XBMFont* fontP);
@@ -65,6 +66,8 @@ class StripDisplay {
 	void displayBitmap();
 
 	private:
+
+	void init(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels);
 
 	int gpio;
 	int w;
