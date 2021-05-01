@@ -155,26 +155,28 @@ void StripDisplay::displayBitmap() {
 }
 
 
-void StripDisplay::renderText(unsigned int x0, unsigned int y0, CRGB crgb) {
-	unsigned int x = x0;
-	unsigned int fontW = fontP->getWidth();
-	unsigned int fontH = fontP->getHeight();
+void StripDisplay::renderText(int x0, int y0, CRGB crgb) {
+	int x = x0;
+	int fontW = (int) fontP->getWidth();
+	int fontH = (int) fontP->getHeight();
 	int textLength = text.length();
-	for (int i=0; i<textLength; i++) {
-		char c = text.charAt(i);
-		// UTF-8 - ISO8859-1 mapping
-		if (c == 195 && i+1<textLength && text.charAt(i+1) > 95 && text.charAt(i+1) < 192)
-			c = text.charAt(++i) + 64;
-		else if (c == 194 && i+1<textLength && text.charAt(i+1) > 160)
-			c = text.charAt(++i);
-		unsigned char * charBytes = fontP->getBitmap(c);
-		for (int k=0; k<fontH; k++) { 
-			unsigned char lineByte = charBytes[k];
-			for (int j=0; j<fontW; j++)
-				if (lineByte & (1 << j)) // fontP->getPixel(c,k,j)
-					BMP_SetPixelRGB(bmp, x+j, y0+k, crgb.r, crgb.g, crgb.b);
+	for (int i=0; i<textLength && x<w; i++) {
+		if (x > -fontW) {
+			char c = text.charAt(i);
+			// UTF-8 - ISO8859-1 mapping
+			if (c == 195 && i+1<textLength && text.charAt(i+1) > 95 && text.charAt(i+1) < 192)
+				c = text.charAt(++i) + 64;
+			else if (c == 194 && i+1<textLength && text.charAt(i+1) > 160)
+				c = text.charAt(++i);
+			unsigned char * charBytes = fontP->getBitmap(c);
+			for (int k=0; k<fontH; k++) { 
+				unsigned char lineByte = charBytes[k];
+				for (int j=0; j<fontW; j++)
+					if (lineByte & (1 << j)) // fontP->getPixel(c,k,j)
+						BMP_SetPixelRGB(bmp, x+j, y0+k, crgb.r, crgb.g, crgb.b);
+			}
 		}
-		x += fontP->getWidth();
+		x += fontW;
 	}
 }
 

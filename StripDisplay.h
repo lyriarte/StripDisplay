@@ -81,7 +81,7 @@ class StripDisplay {
 	void blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap);
 	
 	// render text in the bitmap at specific coordinates
-	void renderText(unsigned int x0, unsigned int y0, CRGB crgb);
+	void renderText(int x0, int y0, CRGB crgb);
 	// render text scrolled at a given offset and display the bitmap
 	void displayText(int offset=0);
 
