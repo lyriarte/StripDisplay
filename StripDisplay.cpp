@@ -27,12 +27,12 @@ void StripDisplay::init(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panel
 	align = ALIGN_LEFT;
 	bg = CRGB(0,0,0);
 	fg = CRGB(1,1,1);
+	newBitmap();
 }
 
 void StripDisplay::setup(XBMFont* fontP) {
 	setFont(fontP);
 	pinMode(gpio, OUTPUT);
-	newTextBitmap();
 }
 
 int StripDisplay::getGpio() {
@@ -66,12 +66,10 @@ BMP * StripDisplay::getBitmap() {
 
 void StripDisplay::setFont(XBMFont* fontP) {
 	this->fontP = fontP;
-	newTextBitmap();
 }
 
 void StripDisplay::setText(String text) {
 	this->text = text;
-	newTextBitmap();
 }
 
 void StripDisplay::setAlignment(int align) {
@@ -88,14 +86,12 @@ void StripDisplay::setFgColor(CRGB fg) {
 
 
 
-void StripDisplay::newTextBitmap() {
+void StripDisplay::newBitmap() {
 	if (bmp != NULL)
 		BMP_Free(bmp);
-	int textWidth = getTextWidth();
-	int textHeight = getTextHeight();
-	bmp = BMP_Create(max(w, textWidth), max(h, textHeight), 24);
+	bmp = BMP_Create(w, h, 24);
 	if (bmp == NULL)
-		Serial.println("Bitmap allocation failed");
+		Serial.println("Display bitmap allocation failed");
 }
 
 void StripDisplay::fillBitmap(unsigned int x0, unsigned int y0, unsigned int dx, unsigned int dy, CRGB crgb) {

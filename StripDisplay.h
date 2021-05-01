@@ -73,8 +73,8 @@ class StripDisplay {
 	void setBgColor(CRGB bg);
 	void setFgColor(CRGB fg);
 
-	// allocate the bitmap with the current text size
-	void newTextBitmap();
+	// allocate the bitmap for the screen size
+	void newBitmap();
 	// fill part of the bitmap with a single color
 	void fillBitmap(unsigned int x0, unsigned int y0, unsigned int dx, unsigned int dy, CRGB crgb);
 	// blit a bitmap region on a given panel 
