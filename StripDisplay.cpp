@@ -167,9 +167,11 @@ void StripDisplay::renderText(unsigned int x0, unsigned int y0, CRGB crgb) {
 			c = text.charAt(++i) + 64;
 		else if (c == 194 && i+1<textLength && text.charAt(i+1) > 160)
 			c = text.charAt(++i);
-		for (int j=0; j<fontW; j++) { 
-			for (int k=0; k<fontH; k++)
-				if (fontP->getPixel(c,k,j))
+		unsigned char * charBytes = fontP->getBitmap(c);
+		for (int k=0; k<fontH; k++) { 
+			unsigned char lineByte = charBytes[k];
+			for (int j=0; j<fontW; j++)
+				if (lineByte & (1 << j)) // fontP->getPixel(c,k,j)
 					BMP_SetPixelRGB(bmp, x+j, y0+k, crgb.r, crgb.g, crgb.b);
 		}
 		x += fontP->getWidth();
