@@ -83,7 +83,7 @@ class StripDisplay {
 	// render text in the bitmap at specific coordinates
 	void renderText(int x0, int y0, CRGB crgb);
 	// render text scrolled at a given offset and display the bitmap
-	void displayText(int offset=0);
+	void displayText(int offset=0, bool fillBg=true);
 
 	// text dimensions in pixels
 	int getTextWidth();
