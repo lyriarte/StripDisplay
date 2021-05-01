@@ -183,17 +183,14 @@ void StripDisplay::renderText(int x0, int y0, CRGB crgb) {
 void StripDisplay::displayText(int offset, bool fillBg) {
 	int x0 = 0;
 	int textWidth = getTextWidth();
-	int textHeight = getTextHeight();
-	int width = min(w, textWidth);
-	int height = min(h, textHeight);
 	if (textWidth <= w) {
 		if (align == ALIGN_CENTER)
-			x0 = (w-width)/2;
+			x0 = (w-textWidth)/2;
 		else if (align == ALIGN_RIGHT)
-			x0 = (w-width);
+			x0 = (w-textWidth);
 	}
 	if (fillBg) {
-		fillBitmap(0, 0, (int)BMP_GetWidth(bmp), (int)BMP_GetHeight(bmp), bg);
+		fillBitmap(0, 0, w, h, bg);
 		displayBitmap();
 	}
 	renderText(x0 - offset, 0, fg);
