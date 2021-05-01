@@ -157,15 +157,18 @@ void StripDisplay::displayBitmap() {
 
 void StripDisplay::renderText(unsigned int x0, unsigned int y0, CRGB crgb) {
 	unsigned int x = x0;
-	for (int i=0; i<text.length(); i++) {
+	unsigned int fontW = fontP->getWidth();
+	unsigned int fontH = fontP->getHeight();
+	int textLength = text.length();
+	for (int i=0; i<textLength; i++) {
 		char c = text.charAt(i);
 		// UTF-8 - ISO8859-1 mapping
-		if (c == 195 && i+1<text.length() && text.charAt(i+1) > 95 && text.charAt(i+1) < 192)
+		if (c == 195 && i+1<textLength && text.charAt(i+1) > 95 && text.charAt(i+1) < 192)
 			c = text.charAt(++i) + 64;
-		else if (c == 194 && i+1<text.length() && text.charAt(i+1) > 160)
+		else if (c == 194 && i+1<textLength && text.charAt(i+1) > 160)
 			c = text.charAt(++i);
-		for (int j=0; j<fontP->getWidth(); j++) { 
-			for (int k=0; k<fontP->getHeight(); k++)
+		for (int j=0; j<fontW; j++) { 
+			for (int k=0; k<fontH; k++)
 				if (fontP->getPixel(c,k,j))
 					BMP_SetPixelRGB(bmp, x+j, y0+k, crgb.r, crgb.g, crgb.b);
 		}
