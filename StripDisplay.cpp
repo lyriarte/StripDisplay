@@ -162,6 +162,8 @@ void StripDisplay::displayBitmap() {
 
 void StripDisplay::renderText(int x0, int y0, CRGB crgb) {
 	int x = x0;
+	if (fontP == NULL)
+		return;
 	int fontW = (int) fontP->getWidth();
 	int fontH = (int) fontP->getHeight();
 	int textLength = text.length();
@@ -205,10 +207,14 @@ void StripDisplay::displayText(int offset, bool fillBg) {
 
 
 int StripDisplay::getTextWidth() {
+	if (fontP == NULL)
+		return 0;
 	return text.length() * fontP->getWidth();
 }
 
 int StripDisplay::getTextHeight() {
+	if (fontP == NULL)
+		return 0;
 	return fontP->getHeight();
 }
 

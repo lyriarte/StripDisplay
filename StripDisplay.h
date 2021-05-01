@@ -47,8 +47,8 @@ class StripDisplay {
 	// initialize with chained panels 
 	StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels);
 
-	// initial bitmap allocation at setup
-	void setup(XBMFont* fontP);
+	// initial setup
+	void setup(XBMFont* fontP = NULL);
 
 	int getGpio();
 	
