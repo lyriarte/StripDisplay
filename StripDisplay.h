@@ -69,7 +69,10 @@ class StripDisplay {
 	// text display API setup
 	void setFont(XBMFont* fontP);
 	void setText(String text);
+	// text alignment: Left, Center or Right
 	void setAlignment(int align);
+	// vertical text alignment in pixel lines from the top
+	void setLine(int line);
 	void setBgColor(CRGB bg);
 	void setFgColor(CRGB fg);
 
@@ -82,7 +85,7 @@ class StripDisplay {
 	
 	// render text in the bitmap at specific coordinates
 	void renderText(int x0, int y0, CRGB crgb);
-	// render text scrolled at a given offset and display the bitmap
+	// render text with horizontal and vertical alignment, scrolled at a given offset and display the bitmap
 	void displayText(int offset=0, bool fillBg=true);
 
 	// text dimensions in pixels
@@ -110,6 +113,7 @@ class StripDisplay {
 	XBMFont* fontP;
 	String text;
 	int align;
+	int line;
 	CRGB bg;
 	CRGB fg;
 };

@@ -25,6 +25,7 @@ void StripDisplay::init(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panel
 	bmp = NULL;
 	fontP = NULL;
 	align = ALIGN_LEFT;
+	line = 0;
 	bg = CRGB(0,0,0);
 	fg = CRGB(1,1,1);
 	newBitmap();
@@ -74,6 +75,10 @@ void StripDisplay::setText(String text) {
 
 void StripDisplay::setAlignment(int align) {
 	this->align = align;
+}
+
+void StripDisplay::setLine(int line) {
+	this->line = line;
 }
 
 void StripDisplay::setBgColor(CRGB bg) {
@@ -193,7 +198,7 @@ void StripDisplay::displayText(int offset, bool fillBg) {
 		fillBitmap(0, 0, w, h, bg);
 		displayBitmap();
 	}
-	renderText(x0 - offset, 0, fg);
+	renderText(x0 - offset, line, fg);
 	displayBitmap();
 }
 
