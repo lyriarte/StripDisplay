@@ -1,6 +1,7 @@
 #define BMP_width 8
 #define BMP_height 2688
 static unsigned char font_FixedMedium_6x12[] = {
+#ifndef BMP_STRIP_0
   0x00, 
   0x00, 
   0x00, 
@@ -385,6 +386,7 @@ static unsigned char font_FixedMedium_6x12[] = {
   0x00, 
   0x00, 
   0x00, 
+#endif // BMP_STRIP_0
   0x00, 
   0x00, 
   0x00, 
@@ -1153,6 +1155,7 @@ static unsigned char font_FixedMedium_6x12[] = {
   0x00, 
   0x00, 
   0x1f, 
+#ifndef BMP_STRIP_96
   0x00, 
   0x00, 
   0x02, 
@@ -1537,6 +1540,8 @@ static unsigned char font_FixedMedium_6x12[] = {
   0x15, 
   0x00, 
   0x00, 
+#endif // BMP_STRIP_96
+#ifndef BMP_STRIP_160
   0x00, 
   0x00, 
   0x00, 
@@ -2689,7 +2694,5 @@ static unsigned char font_FixedMedium_6x12[] = {
   0x04, 
   0x02, 
   0x01, 
-  0x00, 
-  0x00, 
-  0x00
-};
+#endif // BMP_STRIP_160
+0x00};
