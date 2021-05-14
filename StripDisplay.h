@@ -82,7 +82,10 @@ class StripDisplay {
 	void fillBitmap(unsigned int x0, unsigned int y0, unsigned int dx, unsigned int dy, CRGB crgb);
 	// blit a bitmap region on a given panel 
 	void blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap);
-	
+
+	// render xpm bitmap at specific coordinates
+	void renderXpm(int x0, int y0, int w, int h, unsigned char * charBytes, CRGB crgb);
+
 	// render text in the bitmap at specific coordinates
 	void renderText(int x0, int y0, CRGB crgb);
 	// render text with horizontal and vertical alignment, scrolled at a given offset and display the bitmap
