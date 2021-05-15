@@ -31,4 +31,7 @@ In shows the bitmap-level pixel addressing by x,y coordinates API, low level tex
 
 The [AllFonts.ino](examples/AllFonts/AllFonts.ino) example shows all available fonts, from 4x6 to 8x13 bold, on two stacked 32x8 strip led panels.
 
+#### Space Invaders
+
+The [SpaceInvaders.ino](examples/SpaceInvaders/SpaceInvaders.ino) example shows how to render sprites from xbm bitmaps.
 

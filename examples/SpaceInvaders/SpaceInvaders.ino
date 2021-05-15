@@ -14,7 +14,7 @@
 #define STRIPLED_W  64
 #define STRIPLED_H  8
 
-// stack two 32x8 panels vertically
+// stack two 32x8 panels horizontally
 StripLEDPanel panels[] = {
 {
   0,

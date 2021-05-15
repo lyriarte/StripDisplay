@@ -73,7 +73,9 @@ class StripDisplay {
 	void setAlignment(int align);
 	// vertical text alignment in pixel lines from the top
 	void setLine(int line);
+	// background text color
 	void setBgColor(CRGB bg);
+	// foreground text color
 	void setFgColor(CRGB fg);
 
 	// allocate the bitmap for the screen size
@@ -83,7 +85,7 @@ class StripDisplay {
 	// blit a bitmap region on a given panel 
 	void blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap);
 
-	// render xpm bitmap at specific coordinates
+	// render xpm bitmap sprite at specific coordinates
 	void renderXpm(int x0, int y0, int w, int h, unsigned char * charBytes, CRGB crgb);
 
 	// render text in the bitmap at specific coordinates
