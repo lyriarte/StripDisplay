@@ -35,3 +35,7 @@ The [AllFonts.ino](examples/AllFonts/AllFonts.ino) example shows all available f
 
 The [SpaceInvaders.ino](examples/SpaceInvaders/SpaceInvaders.ino) example shows how to render sprites from xbm bitmaps.
 
+#### Message Board
+
+The [MessageBoard.ino](examples/MessageBoard/MessageBoard.ino) example continuously scrolls a text message at fixed speed, 
+while reading text updates from the serial port.
