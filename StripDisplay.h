@@ -21,6 +21,14 @@ enum {
 	WRAP_COLUMNS
 };
 
+// first led origin
+enum {
+	ORIGIN_TOP_LEFT,
+	ORIGIN_TOP_RIGHT,
+	ORIGIN_BOTTOM_LEFT,
+	ORIGIN_BOTTOM_RIGHT
+};
+
 
 // position info for chained panels
 typedef struct {
@@ -34,6 +42,8 @@ typedef struct {
 	int h;
 	// strip LED wrapping in panel
 	int wrap;
+	// panel first led origin
+	int origin;
 } StripLEDPanel;
 
 
@@ -43,7 +53,7 @@ class StripDisplay {
 	public:
 
 	// initialize with a single panel, or chained identical panels 
-	StripDisplay(int gpio, int w, int h, int wrap, CRGB *leds);
+	StripDisplay(int gpio, int w, int h, int wrap, int origin, CRGB *leds);
 	// initialize with chained panels 
 	StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels);
 
@@ -83,7 +93,7 @@ class StripDisplay {
 	// fill part of the bitmap with a single color
 	void fillBitmap(unsigned int x0, unsigned int y0, unsigned int dx, unsigned int dy, CRGB crgb);
 	// blit a bitmap region on a given panel 
-	void blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap);
+	void blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap, int origin);
 
 	// render xpm bitmap sprite at specific coordinates
 	void renderXpm(int x0, int y0, int w, int h, unsigned char * charBytes, CRGB crgb);

@@ -1,6 +1,6 @@
 #include "StripDisplay.h"
 
-StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, CRGB *leds) {
+StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, int origin, CRGB *leds) {
 	StripLEDPanel *panelP = (StripLEDPanel *) malloc(sizeof(StripLEDPanel));
 	panelP->ledIndex = 0;
 	panelP->bmpX = 0;
@@ -8,6 +8,7 @@ StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, CRGB *leds) {
 	panelP->w = w;
 	panelP->h = h;
 	panelP->wrap = wrap;
+	panelP->origin = origin;
 	this->init(gpio, w, h, leds, panelP, 1);
 }
 
@@ -105,16 +106,36 @@ void StripDisplay::fillBitmap(unsigned int x0, unsigned int y0, unsigned int dx,
 			BMP_SetPixelRGB(bmp, x, y, crgb.r, crgb.g, crgb.b);
 }
 
-void StripDisplay::blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap) {
-	int i=i0, ix, iy;
+void StripDisplay::blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap, int origin) {
+	int i=i0, ix, iy, incx, incy;
 	int width = min((int)BMP_GetWidth(bmp),ox+dx);
 	int height = min((int)BMP_GetHeight(bmp),oy+dy);
 	byte r,g,b;
+	switch (origin) {
+		case ORIGIN_TOP_RIGHT:
+			incx = -1;
+			incy = 1;
+			ox += dx-1;
+		break;
+		case ORIGIN_BOTTOM_RIGHT:
+			incx = incy = -1;
+			ox += dx-1;
+			oy += dy-1;
+		break;
+		case ORIGIN_BOTTOM_LEFT:
+			incx = 1;
+			incy = -1;
+			oy += dy-1;
+		break;
+		case ORIGIN_TOP_LEFT:
+		default:
+			incx = incy = 1;
+	}
 	if (wrap == WRAP_LINES) {
 		for (int y=0; y<dy; y++) {
-			iy = y+oy;
+			iy = y*incy+oy;
 			for (int x=0; x<dx;x++) {
-				ix = x+ox;
+				ix = x*incx+ox;
 				if (ix>=0 && iy>=0 && ix<width && iy<height) {
 					BMP_GetPixelRGB(bmp,ix,iy,&r,&g,&b);
 					if (y%2 == 0) 
@@ -128,9 +149,9 @@ void StripDisplay::blitBitmap(int i0, int ox, int oy, int dx, int dy, int wrap) 
 	}
 	else {
 		for (int x=0; x<dx;x++) {
-			ix = x+ox;
+			ix = x*incx+ox;
 			for (int y=0; y<dy; y++) {
-				iy = y+oy;
+				iy = y*incy+oy;
 				if (ix>=0 && iy>=0 && ix<width && iy<height) {
 					BMP_GetPixelRGB(bmp,ix,iy,&r,&g,&b);
 					if (x%2 == 0) 
@@ -156,7 +177,7 @@ void StripDisplay::setPixel(unsigned int x, unsigned int y, CRGB crgb) {
 
 void StripDisplay::displayBitmap() {
 	for (int i=0; i<nPanels; i++)
-		blitBitmap(panels[i].ledIndex, panels[i].bmpX, panels[i].bmpY, panels[i].w, panels[i].h, panels[i].wrap);
+		blitBitmap(panels[i].ledIndex, panels[i].bmpX, panels[i].bmpY, panels[i].w, panels[i].h, panels[i].wrap, panels[i].origin);
 }
 
 
