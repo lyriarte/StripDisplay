@@ -3,6 +3,13 @@
 
 Display text and bitmaps on strip led panels. 
 
+Fonts range between 4 cols x 6 lines and 8 cols x 13 lines. 
+Panels must have at least 5 lines - to display 4x6 font in big caps only.
+
+Strip led serpentine wrap on the panel is supported by columns or by lines, 
+panel led origin can be at top left / top right / bottom left / bottom right, 
+and it is possible to combine heterogeneous panels.
+
 
 ### Acknowledgements
 
@@ -16,7 +23,7 @@ Text and bitmap display APIs on [StripDisplay.h](StripDisplay.h)
 
 ### Code samples
 
-Examples displaying text and adressing pixels on 8 lines / 32 columns strip LED panels.
+Examples displaying text, sprites, and adressing pixels on 8 lines / 32 columns strip LED panels.
 
 #### Basic text display
 
