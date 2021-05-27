@@ -8,7 +8,7 @@ XBMFont * fontP = &fixedMedium_6x9;
 
 CRGB leds[STRIPLED_W*STRIPLED_H];
 
-StripDisplay strip(STRIPLED_GPIO, STRIPLED_W, STRIPLED_H, WRAP_COLUMNS, leds);
+StripDisplay strip(STRIPLED_GPIO, STRIPLED_W, STRIPLED_H, WRAP_COLUMNS, ORIGIN_TOP_LEFT, leds);
 
 void setup() {
 	FastLED.addLeds<NEOPIXEL,STRIPLED_GPIO>(leds, STRIPLED_W*STRIPLED_H);

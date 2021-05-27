@@ -22,7 +22,8 @@ StripLEDPanel panels[] = {
   0,
   STRIPLED_W,
   STRIPLED_H,
-  WRAP_COLUMNS
+  WRAP_COLUMNS,
+  ORIGIN_TOP_LEFT
 }
 };
 #define N_PANELS (sizeof(panels) / sizeof(StripLEDPanel))

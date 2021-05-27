@@ -8,7 +8,7 @@ XBMFont * fontP = &fixedBold_8x13;
 #define STRIPLED_W	32
 #define STRIPLED_H	8
 
-// stack two 32x8 panels vertically
+// stack two 32x8 panels vertically, 2nd panel reversed
 StripLEDPanel panels[] = {
 {
 	0,
@@ -16,7 +16,8 @@ StripLEDPanel panels[] = {
 	0,
 	STRIPLED_W,
 	STRIPLED_H,
-	WRAP_COLUMNS
+	WRAP_COLUMNS,
+	ORIGIN_TOP_LEFT
 },
 {
 	STRIPLED_W*STRIPLED_H, // LED index 256
@@ -24,7 +25,8 @@ StripLEDPanel panels[] = {
 	STRIPLED_H, // y0=8
 	STRIPLED_W,
 	STRIPLED_H,
-	WRAP_COLUMNS
+	WRAP_COLUMNS,
+	ORIGIN_BOTTOM_RIGHT
 }
 };
 #define N_PANELS (sizeof(panels) / sizeof(StripLEDPanel))
