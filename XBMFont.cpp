@@ -1,10 +1,14 @@
 #include "XBMFont.h"
 
+#define BMP_STRIP_FLAG_0	0x01
+#define BMP_STRIP_FLAG_96	0x02
+#define BMP_STRIP_FLAG_160	0x04
 
-XBMFont::XBMFont(unsigned int width, unsigned int height, unsigned char * chars) {
+XBMFont::XBMFont(unsigned int width, unsigned int height, unsigned char * chars, unsigned int bmp_strip_mask) {
 	this->width = width;
 	this->height = height;
 	this->chars = chars; 
+	this->bmp_strip_mask = bmp_strip_mask; 
 }
 
 
@@ -23,11 +27,31 @@ unsigned char * XBMFont::charAt(int index) {
 
 unsigned char * XBMFont::getBitmap(char c) {
 	unsigned int i = (unsigned int) c;
+	unsigned int j = i;
+	// strip 0..31 ?
+	if (bmp_strip_mask & BMP_STRIP_FLAG_0) {
+		if (i < 32)
+			return this->charAt(0);
+		j -= 32;
+	}
+	if (i < 96)
+		return this->charAt(j);
+	// strip 96..127 ?
+	if (bmp_strip_mask & BMP_STRIP_FLAG_96) {
+		if (i < 128)
+			return this->charAt(0);
+		j -= 32;
+	}
 	if (i < 128)
-		return this->charAt(i);
-	if (i > 127 && i < 160)
-		return this->charAt(127); // non printable
-	return this->charAt(i-32);
+		return this->charAt(j);
+	// strip 128..159
+	if (i < 160)
+		return this->charAt(0);
+	j -= 32;
+	// strip 160..255 ?
+	if (bmp_strip_mask & BMP_STRIP_FLAG_160)
+		return this->charAt(0);
+	return this->charAt(j);
 }
 
 
