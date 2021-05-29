@@ -4,6 +4,21 @@
 #include <Arduino.h>
 #include <FastLED.h>
 
+
+#ifdef FONT_CHARSET_MEDIUM
+#define BMP_STRIP_MASK 0x05	// BMP_STRIP_FLAG_0 | BMP_STRIP_FLAG_160
+#define BMP_STRIP_0
+#define BMP_STRIP_160
+#endif
+
+#ifdef FONT_CHARSET_SMALL
+#define BMP_STRIP_MASK 0x07	// BMP_STRIP_FLAG_0 | BMP_STRIP_FLAG_96 | BMP_STRIP_FLAG_160
+#define BMP_STRIP_0
+#define BMP_STRIP_96
+#define BMP_STRIP_160
+#endif
+
+
 #include "XBMFont.h"
 #include "qdbmp.h"
 
