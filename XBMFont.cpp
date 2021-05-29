@@ -37,11 +37,8 @@ unsigned char * XBMFont::getBitmap(char c) {
 	if (i < 96)
 		return this->charAt(j);
 	// strip 96..127 ?
-	if (bmp_strip_mask & BMP_STRIP_FLAG_96) {
-		if (i < 128)
-			return this->charAt(0);
-		j -= 32;
-	}
+	if (bmp_strip_mask & BMP_STRIP_FLAG_96)
+		j -= 32;	// map smallcaps on bigcaps
 	if (i < 128)
 		return this->charAt(j);
 	// strip 128..159
