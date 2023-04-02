@@ -22,6 +22,7 @@
 #include "XBMFont.h"
 #include "qdbmp.h"
 
+#define GPIO_NONE -1            // User-managed GPIO setup
 
 // text alignment
 enum {
@@ -68,8 +69,10 @@ class StripDisplay {
 	public:
 
 	// initialize with a single panel, or chained identical panels 
+	StripDisplay(int w, int h, int wrap, int origin, CRGB *leds);
 	StripDisplay(int gpio, int w, int h, int wrap, int origin, CRGB *leds);
 	// initialize with chained panels 
+	StripDisplay(int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels);
 	StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels);
 
 	// initial setup
@@ -129,6 +132,7 @@ class StripDisplay {
 
 	private:
 
+	void initPanel(int gpio, int w, int h, int wrap, int origin, CRGB *leds);
 	void init(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels);
 
 	int gpio;

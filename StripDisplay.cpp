@@ -1,6 +1,22 @@
 #include "StripDisplay.h"
 
+StripDisplay::StripDisplay(int w, int h, int wrap, int origin, CRGB *leds) {
+	this->initPanel(GPIO_NONE, w, h, wrap, origin, leds);
+}
+
 StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, int origin, CRGB *leds) {
+	this->initPanel(gpio, w, h, wrap, origin, leds);
+}
+
+StripDisplay::StripDisplay(int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels) {
+	this->init(GPIO_NONE, w, h, leds, panels, nPanels);
+}
+
+StripDisplay::StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels) {
+	this->init(gpio, w, h, leds, panels, nPanels);
+}
+
+void StripDisplay::initPanel(int gpio, int w, int h, int wrap, int origin, CRGB *leds) {
 	StripLEDPanel *panelP = (StripLEDPanel *) malloc(sizeof(StripLEDPanel));
 	panelP->ledIndex = 0;
 	panelP->bmpX = 0;
@@ -10,10 +26,6 @@ StripDisplay::StripDisplay(int gpio, int w, int h, int wrap, int origin, CRGB *l
 	panelP->wrap = wrap;
 	panelP->origin = origin;
 	this->init(gpio, w, h, leds, panelP, 1);
-}
-
-StripDisplay::StripDisplay(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels) {
-	this->init(gpio, w, h, leds, panels, nPanels);
 }
 
 void StripDisplay::init(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panels, int nPanels) {
@@ -34,7 +46,8 @@ void StripDisplay::init(int gpio, int w, int h, CRGB *leds, StripLEDPanel *panel
 
 void StripDisplay::setup(XBMFont* fontP) {
 	setFont(fontP);
-	pinMode(gpio, OUTPUT);
+        if (gpio != GPIO_NONE)
+                pinMode(gpio, OUTPUT);
 }
 
 int StripDisplay::getGpio() {
